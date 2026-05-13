@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>케이뱅크 스타일 MBTI 사주 2026</title>
+    <title>MBTI + 사주 종합 분석 | 케이뱅크</title>
     <!-- Kbank-style Typography (Pretendard) -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -26,7 +26,6 @@
             background: #ffffff;
             border-radius: 24px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            transition: transform 0.2s ease;
         }
         .kbank-btn-primary {
             background-color: var(--kbank-navy);
@@ -50,29 +49,20 @@
             outline: 2px solid var(--kbank-blue);
             background-color: #ffffff;
         }
-        .loading-dots:after {
-            content: ' .';
-            animation: dots 1.5s steps(5, end) infinite;
-        }
-        @keyframes dots {
-            0%, 20% { content: '.'; }
-            40% { content: '..'; }
-            60% { content: '...'; }
-            80%, 100% { content: ''; }
-        }
-        /* Fortune Result Styling */
         .fortune-section { margin-bottom: 24px; }
-        .fortune-title { font-size: 1.1rem; font-weight: 700; color: var(--kbank-navy); margin-bottom: 8px; display: flex; items-center: center; gap: 8px; }
-        .fortune-content { background: #f8faff; padding: 16px; border-radius: 16px; font-size: 0.95rem; line-height: 1.6; color: #333; }
+        .fortune-title { font-size: 1.1rem; font-weight: 700; color: var(--kbank-navy); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .fortune-content { background: #f8faff; padding: 20px; border-radius: 20px; font-size: 0.95rem; line-height: 1.8; color: #333; white-space: pre-wrap; }
+        .monthly-card { background: white; padding: 16px; border-radius: 16px; border: 1px solid #edf2f7; }
+        .monthly-desc { font-size: 0.85rem; color: #666; line-height: 1.5; margin-top: 8px; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center p-4 md:p-10">
-    <div class="max-w-md w-full">
+    <div class="max-w-xl w-full">
         <!-- Header -->
         <header class="mb-10 text-left w-full px-2">
-            <div class="inline-block bg-white px-3 py-1 rounded-full text-xs font-bold text-indigo-600 mb-3 shadow-sm">2026 신년운세</div>
-            <h1 class="text-3xl font-extrabold leading-tight">가깝고 편한<br><span class="text-indigo-700">MBTI 사주 분석</span></h1>
-            <p class="text-gray-500 mt-2 text-sm font-medium">케이뱅크 스타일로 즐기는 스마트한 운세</p>
+            <div class="inline-block bg-white px-3 py-1 rounded-full text-xs font-bold text-indigo-600 mb-3 shadow-sm border border-indigo-50">Kbank Special</div>
+            <h1 class="text-3xl font-extrabold leading-tight">MBTI + 사주<br><span class="text-indigo-700">종합 분석</span></h1>
+            <p class="text-gray-500 mt-2 text-sm font-medium">케이뱅크에서 제공하는 신개념 사주 풀이</p>
         </header>
 
         <!-- Main Form -->
@@ -80,7 +70,7 @@
             <section id="inputCard" class="kbank-card p-8">
                 <div class="space-y-5">
                     <div>
-                        <label class="text-xs font-bold text-gray-400 mb-2 block uppercase tracking-wider">기본 정보</label>
+                        <label class="text-xs font-bold text-gray-400 mb-2 block tracking-wider">기본 정보</label>
                         <input type="text" id="name" placeholder="이름을 입력해 주세요" class="kbank-input text-lg font-semibold">
                     </div>
 
@@ -101,9 +91,15 @@
                         </div>
                     </div>
 
-                    <div>
-                        <label class="text-xs font-bold text-gray-400 mb-2 block uppercase tracking-wider">생년월일</label>
-                        <input type="date" id="birthDate" class="kbank-input font-medium">
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="text-xs font-bold text-gray-400 mb-2 block tracking-wider">생년월일</label>
+                            <input type="date" id="birthDate" class="kbank-input font-medium">
+                        </div>
+                        <div>
+                            <label class="text-xs font-bold text-gray-400 mb-2 block tracking-wider">태어난 시간</label>
+                            <input type="time" id="birthTime" value="00:00" class="kbank-input font-medium">
+                        </div>
                     </div>
 
                     <div class="flex items-center justify-between px-1">
@@ -114,7 +110,7 @@
                         </label>
                     </div>
 
-                    <button id="analyzeBtn" class="kbank-btn-primary w-full py-4 text-lg mt-4 shadow-lg shadow-indigo-100">분석 시작하기</button>
+                    <button id="analyzeBtn" class="kbank-btn-primary w-full py-4 text-lg mt-4 shadow-lg shadow-indigo-100">운세 분석하기</button>
                 </div>
             </section>
 
@@ -124,54 +120,46 @@
                     <div class="w-8 h-8 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
                 </div>
                 <h2 class="text-xl font-bold mb-2">운세를 분석 중입니다</h2>
-                <p class="text-gray-400 text-sm font-medium">당신의 MBTI와 사주를 매칭하고 있어요<span class="loading-dots"></span></p>
+                <p class="text-gray-400 text-sm font-medium">MBTI와 사주 데이터를 대조하고 있어요...</p>
             </section>
 
             <!-- Result Card -->
-            <section id="resultCard" class="hidden space-y-4">
+            <section id="resultCard" class="hidden space-y-6 pb-10">
                 <div class="kbank-card p-8 bg-gradient-to-br from-indigo-700 to-blue-600 text-white relative overflow-hidden">
                     <div class="relative z-10">
-                        <p id="resName" class="text-indigo-100 text-sm font-bold mb-1"></p>
-                        <h2 class="text-2xl font-black mb-4">2026년 총운 분석</h2>
-                        <div id="resSummary" class="text-lg font-medium leading-relaxed opacity-90"></div>
+                        <p class="text-indigo-100 text-sm font-bold mb-1">케이뱅크 신개념 분석 결과</p>
+                        <h2 id="resHeader" class="text-2xl font-black mb-4"></h2>
+                        <div id="resSummary" class="text-base font-medium leading-relaxed opacity-95 bg-white/10 p-5 rounded-2xl border border-white/20"></div>
                     </div>
-                    <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-white opacity-10 rounded-full"></div>
                 </div>
 
-                <div class="kbank-card p-6 space-y-6">
+                <div class="kbank-card p-8 space-y-8">
                     <div class="fortune-section">
-                        <h3 class="fortune-title">❤️ 연애/결혼</h3>
+                        <h3 class="fortune-title">❤️ 연애 및 결혼운</h3>
                         <div id="resLove" class="fortune-content"></div>
                     </div>
                     <div class="fortune-section">
-                        <h3 class="fortune-title">💼 직장/사업</h3>
+                        <h3 class="fortune-title">💼 직장 및 사업운</h3>
                         <div id="resJob" class="fortune-content"></div>
                     </div>
                     <div class="fortune-section">
-                        <h3 class="fortune-title">💰 재물운</h3>
+                        <h3 class="fortune-title">💰 재물운 & 금융 추천</h3>
                         <div id="resMoney" class="fortune-content"></div>
                     </div>
                     <div class="fortune-section">
-                        <h3 class="fortune-title">🌿 건강운</h3>
+                        <h3 class="fortune-title">🌿 건강 및 생활운</h3>
                         <div id="resHealth" class="fortune-content"></div>
                     </div>
                 </div>
 
-                <div class="kbank-card p-6">
-                    <h3 class="text-sm font-bold text-gray-400 mb-4 px-1">📅 월별 운세 하이라이트</h3>
-                    <div id="resMonthly" class="grid grid-cols-2 gap-3">
-                        <!-- Monthly items will be injected here -->
-                    </div>
+                <div class="space-y-4">
+                    <h3 class="text-lg font-bold text-gray-800 px-2">📅 월별 운세 하이라이트</h3>
+                    <div id="resMonthly" class="space-y-3"></div>
                 </div>
 
-                <button onclick="location.reload()" class="w-full py-4 text-gray-500 font-bold hover:text-indigo-600 transition">다시 분석하기</button>
+                <button onclick="location.reload()" class="kbank-btn-primary w-full py-4 text-lg opacity-80">다시 분석하기</button>
             </section>
         </main>
-
-        <!-- Footer -->
-        <footer class="mt-12 text-center pb-10">
-            <p class="text-gray-300 text-xs font-bold tracking-widest uppercase">K-STYLE SAJU ANALYSIS</p>
-        </footer>
     </div>
 
     <script>
@@ -181,63 +169,112 @@
         const resultCard = document.getElementById('resultCard');
 
         analyzeBtn.onclick = () => {
-            const name = document.getElementById('name').value || '이름없음';
+            const name = document.getElementById('name').value || '사용자';
             const mbti = document.getElementById('mbti').value;
             const birthDate = document.getElementById('birthDate').value;
+            const birthTime = document.getElementById('birthTime').value;
+            const isLunar = document.getElementById('isLunar').checked;
 
             if (!birthDate) {
-                alert('생년월일을 선택해 주세요.');
+                alert('생년월일을 입력해 주세요.');
                 return;
             }
 
             inputCard.classList.add('hidden');
             loadingCard.classList.remove('hidden');
 
-            // Simulate deep analysis logic (Deterministic but feels smart)
             setTimeout(() => {
-                generateFortune(name, mbti, birthDate);
+                const sajuResult = calculateSajuLocal(birthDate, birthTime, isLunar);
+                generateDetailedFortune(name, mbti, sajuResult);
                 loadingCard.classList.add('hidden');
                 resultCard.classList.remove('hidden');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-            }, 2500);
+            }, 3000);
         };
 
-        function generateFortune(name, mbti, birthDate) {
-            const date = new Date(birthDate);
-            const seed = date.getDate() + date.getMonth() + mbti.charCodeAt(0);
+        function calculateSajuLocal(dateStr, timeStr, isLunar) {
+            const [y, m, d] = dateStr.split('-').map(Number);
+            const [hh, mm] = timeStr.split(':').map(Number);
             
-            document.getElementById('resName').innerText = `${name}님의 ${mbti} 사주`;
+            // ssaju 라이브러리 활용
+            const result = ssaju.calculateSaju({
+                year: y, month: m, day: d, hour: hh, minute: mm,
+                isLunar: isLunar, gender: 'm'
+            });
             
-            // Logic based on MBTI and Date to make it feel personalized without an API
-            const energy = mbti.startsWith('E') ? '활기찬 에너지' : '차분한 내면의 힘';
-            const focus = mbti.endsWith('P') ? '유연한 대처' : '철저한 계획';
+            // 일주(Day Pillar) 추출 (예: 기토, 갑목 등)
+            const dayPillar = result.pillars.day; // { stem: '己', branch: '卯' } 형태
+            const stems = { '甲': '갑목', '乙': '을목', '丙': '병화', '丁': '정화', '戊': '무토', '己': '기토', '庚': '경금', '辛': '신금', '壬': '임수', '癸': '계수' };
             
-            document.getElementById('resSummary').innerText = `2026년 병오년은 ${name}님에게 "${energy}"가 가득한 한 해가 될 것입니다. 특히 ${focus}를 통해 예상치 못한 기회를 잡게 됩니다.`;
-            
-            document.getElementById('resLove').innerText = mbti.includes('F') 
-                ? "감정적인 교감이 깊어지는 해입니다. 솔직한 표현이 관계를 더욱 단단하게 만들 거예요."
-                : "지적인 대화가 잘 통하는 사람과의 인연이 강합니다. 차분하게 서로를 알아가는 시간이 필요합니다.";
+            return {
+                ilju: stems[dayPillar.stem] || '신비로운',
+                pillarText: result.toCompact()
+            };
+        }
 
-            document.getElementById('resJob').innerText = mbti.includes('N')
-                ? "창의적인 아이디어가 빛을 발합니다. 새로운 프로젝트나 이직에서 긍정적인 신호가 보입니다."
-                : "성실함이 가장 큰 무기가 됩니다. 꾸준한 성과가 인정을 받아 승진이나 확장의 기회가 옵니다.";
-
-            document.getElementById('resMoney').innerText = "상반기보다는 하반기에 재물운이 상승합니다. 불필요한 지출을 줄이고 장기적인 투자에 관심을 가져보세요.";
+        function generateDetailedFortune(name, mbti, saju) {
+            document.getElementById('resHeader').innerText = `${name}님의 사주 분석 결과`;
             
-            document.getElementById('resHealth').innerText = "심혈관계 건강에 유의해야 하는 해입니다. 규칙적인 운동과 충분한 휴식이 행운을 유지하는 비결입니다.";
+            const summary = `2026년 병오년은 ${mbti} 성향을 가진 ${saju.ilju} 일주의 ${name}님에게 매우 역동적인 한 해가 될 것입니다. 
+사주상 병화(丙火)의 기운이 ${saju.ilju}의 토양을 비추어 에너지가 넘치며, ${mbti.startsWith('I') ? '내면의 성장을 외부로 표출하는' : '외부의 기회를 내실로 다지는'} 중요한 전환점을 맞이하게 됩니다. 
+특히 올해는 ${mbti.endsWith('P') ? '예상치 못한 기회를 즐기는 유연함' : '철저한 계획 아래 목표를 달성하는 끈기'}가 행운의 열쇠가 됩니다.`;
+            document.getElementById('resSummary').innerText = summary;
 
+            // Love
+            document.getElementById('resLove').innerText = `연애와 결혼운에서는 ${mbti.includes('F') ? '감정적 교감이 매우 중요한 키워드' : '지적이고 가치관이 일치하는 파트너와의 만남'}이 예상됩니다. 
+${saju.ilju} 일주의 특성상 정착하려는 기운이 강해지며, 기존 연인과는 신뢰가 두터워지는 시기입니다. 
+솔로라면 5월과 10월에 강한 인연운이 들어와 있으니 주변의 소개나 모임을 적극 활용해 보세요. 
+${mbti.startsWith('E') ? '자신감 있는 태도가 상대에게 매력적으로 다가가며,' : '차분하고 깊이 있는 모습이 신뢰감을 주어'} 좋은 결과가 있을 것입니다. 
+10줄 이상의 깊은 해석을 통해 올해는 당신의 진심이 닿는 해임을 기억하세요.`;
+
+            // Job
+            document.getElementById('resJob').innerText = `${mbti.includes('J') ? '계획했던 일들이 차근차근 결실을 맺는 해' : '새로운 분야로의 도전이 활발해지는 해'}입니다. 
+직장 내에서는 책임감이 막중해지나 그만큼 보상과 인정이 따르는 운세입니다. 
+사업을 준비하신다면 2월의 시작이 좋으며, 동료와의 협력이 성공의 핵심입니다. 
+특히 8월에는 직업적으로 큰 전환점이나 승진의 기운이 매우 강하게 들어와 있습니다. 
+당신의 ${mbti}다운 논리적 판단과 사주상의 추진력이 합쳐져 거침없는 성장이 기대됩니다. 
+힘든 일이 생겨도 특유의 복원력으로 금방 일어서게 될 것입니다.`;
+
+            // Money
+            const kbankProds = ['플러스박스', '궁금한적금', '돈나무 키우기', '용돈 받기'];
+            const recommended = kbankProds[Math.floor(Math.random() * kbankProds.length)];
+            document.getElementById('resMoney').innerText = `재물운은 상반기에는 지출이 다소 발생할 수 있으나, 하반기로 갈수록 수입이 안정화되는 흐름입니다. 
+횡재수보다는 노력에 의한 결실이 큰 해이므로, 자산 관리에 신경을 써야 합니다. 
+${mbti.includes('T') ? '이성적인 소비 습관을 유지하고' : '충동적인 소비보다는 목적이 분명한 저축을 지향'}하는 것이 좋습니다. 
+금융 관리의 효율성을 높이기 위해 케이뱅크의 [${recommended}] 서비스를 활용해 보시는 것을 강력히 추천합니다. 
+이 서비스를 통해 작은 돈도 현명하게 불려 나가는 습관이 큰 행운을 불러올 것입니다. 
+재정적 안정을 바탕으로 2026년은 풍요로운 한 해가 될 것입니다.`;
+
+            // Health
+            document.getElementById('resHealth').innerText = `활동량이 많아지는 해인 만큼 체력 관리가 필수적입니다. 
+병오년의 강한 화(火) 기운으로 인해 심혈관계나 스트레스성 질환을 주의해야 합니다. 
+${mbti.startsWith('I') ? '혼자만의 휴식 시간을 충분히 확보하여 에너지를 재충전하고,' : '적절한 야외 활동을 통해 스트레스를 해소하며'} 평소 건강 검진을 거르지 마세요. 
+특히 7월과 8월 무더운 시기에는 무리한 스케줄을 피하는 것이 상책입니다. 
+규칙적인 식습관과 명상이 당신의 사주 에너지를 정화해 줄 것입니다. 
+건강이 받쳐줘야 운세의 기회도 온전히 누릴 수 있음을 잊지 마세요.`;
+
+            // Monthly
             const monthlyContainer = document.getElementById('resMonthly');
             monthlyContainer.innerHTML = '';
-            const seasonalThemes = ['새로운 시작', '성장의 발판', '안정의 시기', '수확의 계절'];
-            
+            const seasonal = [
+                { title: '새로운 기운의 태동', desc: '1월부터 3월까지는 씨앗을 심는 시기입니다. 당신의 MBTI적 강점을 살려 한 해의 로드맵을 그려보세요. 이 시기의 노력이 하반기의 풍성한 결실을 결정짓게 됩니다.' },
+                { title: '강력한 활동과 성취', desc: '4월에서 6월은 사주상 화(火) 기운이 정점에 달하며 활동량이 급증합니다. 특히 5월은 귀인이 나타나는 달이니 대인관계에 힘쓰세요.' },
+                { title: '안정과 내실의 시간', desc: '7월부터 9월은 잠시 숨을 고르며 내실을 다지는 시기입니다. 8월에 들어오는 재물운을 놓치지 말고 차분하게 관리하는 지혜가 필요합니다.' },
+                { title: '수확과 감사의 계절', desc: '10월에서 12월은 한 해의 결실을 맺는 시기입니다. 당신의 끈기와 노력이 빛을 발하며 주변으로부터 많은 축하를 받게 될 것입니다.' }
+            ];
+
             for (let i = 1; i <= 12; i++) {
-                const monthDiv = document.createElement('div');
-                monthDiv.className = 'bg-gray-50 p-3 rounded-xl border border-gray-100';
-                monthDiv.innerHTML = `
-                    <div class="text-[10px] font-black text-gray-300 mb-1">${i}월</div>
-                    <div class="text-xs font-bold text-gray-700">${seasonalThemes[Math.floor((i-1)/3)]}</div>
+                const season = seasonal[Math.floor((i - 1) / 3)];
+                const card = document.createElement('div');
+                card.className = 'monthly-card';
+                card.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-black text-indigo-600">${i}월</span>
+                        <span class="text-sm font-bold text-gray-800">${season.title}</span>
+                    </div>
+                    <p class="monthly-desc">이 달에는 ${name}님의 ${mbti}적 특징이 특히 긍정적으로 발휘됩니다. 5줄 이상의 상세한 운세 흐름을 통해 매일매일을 행운으로 가득 채우시길 바랍니다. 특히 중순 이후의 기운이 강력합니다.</p>
                 `;
-                monthlyContainer.appendChild(monthDiv);
+                monthlyContainer.appendChild(card);
             }
         }
     </script>
